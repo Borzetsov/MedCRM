@@ -62,7 +62,7 @@ CREATE TABLE medical_professionals
 CREATE TABLE medical_services
 (
     id                                     BIGSERIAL,
-    category                               VARCHAR(255) REFERENCES medical_service_categories (name)
+    category                               BIGINT REFERENCES medical_service_categories (id)
         ON DELETE CASCADE,
     required_medical_professional_category BIGINT REFERENCES medical_professionals_categories (id)
         ON DELETE CASCADE,
@@ -78,9 +78,9 @@ CREATE TABLE appointments
     id                            BIGSERIAL PRIMARY KEY,
     patient                       BIGINT REFERENCES patients (id)
         ON DELETE CASCADE,
-    medical_service               BIGINT NOT NULL,
-    medical_professional          BIGINT NOT NULL,
-    medical_professional_category BIGINT NOT NULL,
+    medical_service               BIGINT         NOT NULL,
+    medical_professional          BIGINT         NOT NULL,
+    medical_professional_category BIGINT         NOT NULL,
     appointment_date              DATE           NOT NULL,
     timeslot                      INT            NOT NULL,
     price_fact                    DECIMAL(10, 2) NOT NULL
