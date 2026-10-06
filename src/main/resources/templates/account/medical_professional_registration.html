@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация нового медицинского работника</title>
+</head>
+<body>
+<form th:action="@{/medical_professional/registration}" method="post">
+    <input type="text" name="firstName" placeholder="Имя">
+    <input type="text" name="lastName" placeholder="Фамилия">
+    <input type="text" name="category" placeholder="Категория">
+    <button>Регистрация</button>
+</form>
+</body>
+</html>

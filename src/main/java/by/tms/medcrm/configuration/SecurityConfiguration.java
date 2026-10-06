@@ -16,6 +16,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/account/registration", "/account/registration/**").permitAll()
                         .requestMatchers("/administration/medical_service_categories", "/administration/medical_service_categories/**").permitAll()
                         .requestMatchers("/administration/medical_professionals_categories", "/administration/medical_professionals_categories/**").permitAll()
+                        .requestMatchers("/patient/registration", "/patient/registration/**").permitAll()
+                        .requestMatchers("/medical_professional/registration", "/medical_professional/registration/**").permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
