@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись на прием</title>
+</head>
+<body>
+<form th:action="@{/appointment/registration}" method="post">
+    <input type="text" name="patientLastName" placeholder="Фамилия пациента"><br>
+    <input type="text" name="medicalService" placeholder="Услуга"><br>
+    <input type="text" name="medicalProfessionalLastName" placeholder="Фамилия врача"><br>
+    <input type="text" name="medicalProfessionalCategory" placeholder="Категория врача"><br>
+    <input type="date" name="appointmentDate" placeholder="Дата приема"><br>
+    <input type="number" name="timeslot" placeholder="Время"><br>
+    <button>Записаться</button>
+</form>
+</body>
+</html>

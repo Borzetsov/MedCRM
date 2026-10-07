@@ -86,7 +86,7 @@ CREATE TABLE appointments
     price_fact                    DECIMAL(10, 2) NOT NULL
         CHECK ( price_fact >= 0 ),
     status                        TEXT           NOT NULL
-        CHECK ( status IN ('started', 'finished', 'aborted') ),
+        CHECK ( status IN ('scheduled', 'cancelled', 'started', 'finished') ),
 
     CONSTRAINT uk1_appointments_patient_timeslot
         UNIQUE (patient, appointment_date, timeslot),
