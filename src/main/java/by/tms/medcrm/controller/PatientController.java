@@ -2,7 +2,7 @@ package by.tms.medcrm.controller;
 
 import by.tms.medcrm.dto.PatientDTO;
 import by.tms.medcrm.entity.Account;
-import by.tms.medcrm.entity.AccountType;
+import by.tms.medcrm.entity.Role;
 import by.tms.medcrm.entity.GenderType;
 import by.tms.medcrm.entity.Patient;
 import by.tms.medcrm.repository.PatientRepository;
@@ -44,7 +44,7 @@ public class PatientController {
         Account account = new Account();
         account.setLogin(patientDTO.getEmail());
         account.setPasswordHash(passwordUtil.hash("12345678"));
-        account.setType(AccountType.PATIENT);
+        account.setRole(Role.ROLE_PATIENT);
 
         patient.setAccount(account);
 
