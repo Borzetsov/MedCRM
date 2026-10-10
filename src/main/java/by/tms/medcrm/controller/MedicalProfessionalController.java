@@ -2,7 +2,7 @@ package by.tms.medcrm.controller;
 
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
 import by.tms.medcrm.entity.Account;
-import by.tms.medcrm.entity.AccountType;
+import by.tms.medcrm.entity.Role;
 import by.tms.medcrm.entity.MedicalProfessional;
 import by.tms.medcrm.entity.MedicalProfessionalCategory;
 import by.tms.medcrm.repository.MedicalProfessionalCategoryRepository;
@@ -48,7 +48,7 @@ public class MedicalProfessionalController {
         medicalProfessional.setLastName(medicalProfessionalDTO.getLastName());
 
         Account account = new Account();
-        account.setType(AccountType.MEDICAL_PROFESSIONAL);
+        account.setRole(Role.ROLE_MEDICAL_PROFESSIONAL);
         account.setLogin("MD1");
         account.setPasswordHash(passwordUtil.hash("123"));
 

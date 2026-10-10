@@ -2,7 +2,7 @@ package by.tms.medcrm.controller;
 
 import by.tms.medcrm.dto.AccountDTO;
 import by.tms.medcrm.entity.Account;
-import by.tms.medcrm.entity.AccountType;
+import by.tms.medcrm.entity.Role;
 import by.tms.medcrm.entity.Administrator;
 import by.tms.medcrm.repository.AccountRepository;
 import by.tms.medcrm.repository.AdministratorRepository;
@@ -36,7 +36,7 @@ public class RegistrationController {
         Account account = new Account();
         account.setLogin(accountDTO.getLogin());
         account.setPasswordHash(passwordUtil.hash(accountDTO.getPassword()));
-        account.setType(AccountType.ADMINISTRATOR);
+        account.setRole(Role.ROLE_PATIENT);
 
         Administrator administrator = new Administrator();
         administrator.setAccount(account);
