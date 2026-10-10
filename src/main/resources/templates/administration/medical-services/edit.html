@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование медицинской услуги</title>
+</head>
+<body>
+<form th:action="@{/administration/medical-services/update}"
+      th:object="${medicalService}" method="post">
+
+    <input type="hidden" name="serviceId" th:value="${currentServiceId}">
+    <input type="hidden" name="categoryId" th:value="${currentCategoryId}">
+
+    <label>Название</label>
+    <input type="text" th:field="*{name}" placeholder="Название услуги"><br>
+
+    <label>Категория</label>
+    <input type="text" th:field="*{category.name}" placeholder="Категория услуги"><br>
+
+    <label>Цена</label>
+    <input type="text" th:field="*{price}" placeholder="Цена"><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/administration/medical-services}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинские услуги</title>
+</head>
+<body>
+<form th:action="@{/administration/medical-services}" method="post">
+    <input type="text" name="name" placeholder="Название услуги"><br>
+    <input type="text" name="category" placeholder="Категория"><br>
+    <input type="text" name="requiredMedicalProfessionalCategory" placeholder="Категория медицинского работника"><br>
+    <input type="number" name="price" placeholder="Цена"><br>
+    <button>Добавить</button>
+</form>
+<br>
+<ol>
+    <li th:each="medicalService : ${medicalServices}">
+        <span th:text="${medicalService.getName()}">Название</span>
+        <span th:text="${medicalService.getPrice()}">Цена</span>
+        <a th:href="@{/administration/medical-services/edit(serviceId=${medicalService.getId().getId()}, categoryId=${medicalService.getId().getRequiredMedicalProfessionalCategory()})}">Редактировать</a>
+        <form th:action="@{/administration/medical-services/delete(serviceId=${medicalService.getId().getId()}, categoryId=${medicalService.getId().getRequiredMedicalProfessionalCategory()})}" method="post">
+            <button type="submit" onclick="return confirm('Удалить услугу?')">Удалить</button>
+        </form>
+    </li>
+</ol>
+<a th:href="@{/administration}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

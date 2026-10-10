@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование категории медицинских работников</title>
+</head>
+<body>
+<form th:action="@{/administration/medical-professionals/categories/update}"
+      th:object="${medicalProfessionalCategory}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label>Название</label>
+    <input type="text" th:field="*{name}" placeholder="Название категории">
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/administration/medical-professionals/categories}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

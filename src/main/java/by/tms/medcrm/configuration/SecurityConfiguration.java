@@ -21,8 +21,13 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/auth/login", "/auth/login-error").permitAll()
                         .requestMatchers("/account/registration", "/account/registration").permitAll()
-                        .requestMatchers("/appointment/registration", "/appointment/registration/**")
-                                .hasAnyRole("PATIENT", "ADMINISTRATOR_CRM")
+                        .requestMatchers("/appointment/registration", "/appointment/registration/**").hasAnyRole("PATIENT", "ADMINISTRATOR")
+                        .requestMatchers("/administration", "/administration/**").hasRole("ADMINISTRATOR_CRM")
+                        .requestMatchers("/administration/medical-services/categories", "/administration/medical-services/categories/**").hasRole("ADMINISTRATOR_CRM")
+                        .requestMatchers("/administration/medical-professionals/categories", "/administration/medical-professionals/categories/**").hasRole("ADMINISTRATOR_CRM")
+                        .requestMatchers("/administration/medical-professionals", "/administration/medical-professionals/**").hasRole("ADMINISTRATOR_CRM")
+                        .requestMatchers("/administration/medical-services", "/administration/medical-services/**").hasRole("ADMINISTRATOR_CRM")
+                        .requestMatchers("/administration/administrators", "/administration/administrators/**").hasRole("ADMINISTRATOR_CRM")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

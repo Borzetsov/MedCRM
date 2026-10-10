@@ -5,7 +5,7 @@ import by.tms.medcrm.entity.Role;
 import by.tms.medcrm.repository.AccountRepository;
 import by.tms.medcrm.util.PasswordUtil;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class AdministratorCRMInitializer {
 
     @Value("${ADMINISTRATOR_CRM_LOGIN}")
@@ -22,11 +23,8 @@ public class AdministratorCRMInitializer {
     @Value("${ADMINISTRATOR_CRM_PASSWORD}")
     private String password;
 
-    @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    PasswordUtil passwordUtil;
+    private final AccountRepository accountRepository;
+    private final PasswordUtil passwordUtil;
 
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
