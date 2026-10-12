@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование администратора</title>
+</head>
+<body>
+<form th:action="@{/administration/administrators/update}"
+      th:object="${administrator}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{account}">
+    <label>Имя</label>
+    <input type="text" th:field="*{firstName}" placeholder="Имя">
+    <label>Фамилия</label>
+    <input type="text" th:field="*{lastName}" placeholder="Фамилия">
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/administration/administrators}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

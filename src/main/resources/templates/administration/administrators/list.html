@@ -15,6 +15,7 @@
     <li th:each="administrator : ${administrators}">
         <span th:text="${administrator.getLastName()}">Фамилия</span>
         <span th:text="${administrator.getFirstName()}">Имя</span>
+        <a th:href="@{/administration/administrators/edit(id=${administrator.getId()})}">Редактировать</a>
         <form th:action="@{/administration/administrators/delete/{id}(id=${administrator.getId()})}" method="post">
             <button type="submit" onclick="return confirm('Удалить администратора?')">Удалить</button>
         </form>

@@ -1,15 +1,12 @@
 package by.tms.medcrm.controller.administration;
 
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
-import by.tms.medcrm.entity.MedicalProfessionalId;
+import by.tms.medcrm.entity.*;
 import by.tms.medcrm.service.MedicalProfessionalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,6 +24,35 @@ public class AdminMedicalProfessionalsController {
     @PostMapping()
     private String create(MedicalProfessionalDTO medicalProfessionalDTO, Model model) {
         medicalProfessionalService.create(medicalProfessionalDTO);
+        model.addAttribute("medicalProfessionals", medicalProfessionalService.findAll());
+        return "administration/medical-professionals/list";
+    }
+
+    @GetMapping("/edit")
+    public String showUpdateForm(@RequestParam(name = "professionalId") Long professionalId,
+                                 @RequestParam(name = "categoryId") Long categoryId,
+                                 Model model) {
+        MedicalProfessionalId medicalProfessionalId = new MedicalProfessionalId();
+        medicalProfessionalId.setId(professionalId);
+        medicalProfessionalId.setCategory(categoryId);
+
+        model.addAttribute("medicalProfessional", medicalProfessionalService.findById(medicalProfessionalId));
+        model.addAttribute("currentProfessionalId", professionalId);
+        model.addAttribute("currentCategoryId", categoryId);
+        return "administration/medical-professionals/edit";
+    }
+
+    @PostMapping("/update")
+    public String updateCategory(@ModelAttribute("medicalProfessional") MedicalProfessional medicalProfessional,
+                                 @RequestParam(name = "professionalId") Long professionalId,
+                                 @RequestParam(name = "categoryId") Long categoryId,
+                                 Model model) {
+        medicalProfessional.setId(professionalId);
+        MedicalProfessionalCategory category = new MedicalProfessionalCategory();
+        category.setId(categoryId);
+        medicalProfessional.setCategory(category);
+        medicalProfessionalService.update( medicalProfessional);
+
         model.addAttribute("medicalProfessionals", medicalProfessionalService.findAll());
         return "administration/medical-professionals/list";
     }

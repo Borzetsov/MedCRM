@@ -17,6 +17,7 @@
         <span th:text="${medicalProfessional.getFirstName()}">Мия</span>
         <span th:text="${medicalProfessional.getLastName()}">Фамилия</span>
         <span th:text="${medicalProfessional.getCategory().getName()}">Категория</span>
+        <a th:href="@{/administration/medical-professionals/edit(professionalId=${medicalProfessional.getId().getId()}, categoryId=${medicalProfessional.getId().getCategory()})}">Редактировать</a>
         <form th:action="@{/administration/medical-professionals/delete(id=${medicalProfessional.getId().getId()}, categoryId=${medicalProfessional.getId().getCategory()})}" method="post">
             <button type="submit" onclick="return confirm('Удалить медицинского работника?')">Удалить</button>
         </form>

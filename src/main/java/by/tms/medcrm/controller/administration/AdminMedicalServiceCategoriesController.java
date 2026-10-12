@@ -29,7 +29,7 @@ public class AdminMedicalServiceCategoriesController {
     }
 
     @GetMapping("/edit")
-    public String showUpdateForm(@RequestParam(name="id") Long id, Model model) {
+    public String showUpdateForm(@RequestParam(name = "id") Long id, Model model) {
         model.addAttribute("medicalServiceCategory", medicalServiceCategoryService.findById(id));
         return "administration/medical-services/category-edit";
     }

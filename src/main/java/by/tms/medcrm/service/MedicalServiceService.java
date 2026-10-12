@@ -9,7 +9,6 @@ import by.tms.medcrm.repository.MedicalProfessionalCategoryRepository;
 import by.tms.medcrm.repository.MedicalServiceCategoryRepository;
 import by.tms.medcrm.repository.MedicalServiceRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Transient;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,7 +54,7 @@ public class MedicalServiceService {
     }
 
     @Transactional
-    public MedicalService update(MedicalService medicalService) {
+    public MedicalService update(MedicalService medicalService) throws  EntityNotFoundException {
         MedicalServiceId medicalServiceId = medicalService.getId();
         MedicalService managedMedicalService = medicalServiceRepository.findById(medicalServiceId)
                 .orElseThrow(() -> new EntityNotFoundException("Услуга не найдена"));

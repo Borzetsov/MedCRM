@@ -3,7 +3,6 @@ package by.tms.medcrm.controller.administration;
 import by.tms.medcrm.dto.MedicalServiceDTO;
 import by.tms.medcrm.entity.MedicalProfessionalCategory;
 import by.tms.medcrm.entity.MedicalService;
-import by.tms.medcrm.entity.MedicalServiceCategory;
 import by.tms.medcrm.entity.MedicalServiceId;
 import by.tms.medcrm.service.MedicalServiceService;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +46,8 @@ public class AdminMedicalServicesController {
 
     @PostMapping("/update")
     public String updateCategory(@ModelAttribute("medicalService") MedicalService medicalService,
-                                 @RequestParam(name="serviceId")  Long serviceId,
-                                 @RequestParam(name="categoryId") Long categoryId,
+                                 @RequestParam(name = "serviceId") Long serviceId,
+                                 @RequestParam(name = "categoryId") Long categoryId,
                                  Model model) {
         medicalService.setId(serviceId);
         MedicalProfessionalCategory category = new MedicalProfessionalCategory();

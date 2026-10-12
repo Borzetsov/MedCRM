@@ -1,14 +1,12 @@
 package by.tms.medcrm.controller.administration;
 
 import by.tms.medcrm.dto.AdministratorDTO;
+import by.tms.medcrm.entity.Administrator;
 import by.tms.medcrm.service.AdministratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +24,19 @@ public class AdminAdministratorsController {
     @PostMapping
     public String create(AdministratorDTO administratorDTO, Model model) {
         administratorService.create(administratorDTO);
+        model.addAttribute("administrators", administratorService.findAll());
+        return "administration/administrators/list";
+    }
+
+    @GetMapping("/edit")
+    public String showUpdateForm(@RequestParam(name = "id") Long id, Model model) {
+        model.addAttribute("administrator", administratorService.findById(id));
+        return "administration/administrators/edit";
+    }
+
+    @PostMapping("/update")
+    public String updateCategory(@ModelAttribute("administrator") Administrator administrator, Model model) {
+        administratorService.update(administrator);
         model.addAttribute("administrators", administratorService.findAll());
         return "administration/administrators/list";
     }

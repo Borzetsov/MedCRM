@@ -22,6 +22,11 @@ public class MedicalProfessionalService {
         return medicalProfessionalRepository.findAll();
     }
 
+    public MedicalProfessional findById(MedicalProfessionalId medicalProfessionalId) throws EntityNotFoundException {
+        return medicalProfessionalRepository.findById(medicalProfessionalId)
+                .orElseThrow(() -> new EntityNotFoundException("Медицинский работник не найден"));
+    }
+
     public MedicalProfessional create(MedicalProfessionalDTO medicalProfessionalDTO) throws EntityNotFoundException {
         MedicalProfessional medicalProfessional = new MedicalProfessional();
 
@@ -41,6 +46,15 @@ public class MedicalProfessionalService {
         medicalProfessional.setAccount(account);
 
         return medicalProfessionalRepository.save(medicalProfessional);
+    }
+
+    public MedicalProfessional update(MedicalProfessional medicalProfessional) throws EntityNotFoundException {
+        MedicalProfessionalId medicalProfessionalId = medicalProfessional.getId();
+        MedicalProfessional managedProfessional = medicalProfessionalRepository.findById(medicalProfessionalId)
+                .orElseThrow(() -> new EntityNotFoundException("Медицинский работник не найден"));
+        managedProfessional.setFirstName(medicalProfessional.getFirstName());
+        managedProfessional.setLastName(medicalProfessional.getLastName());
+        return medicalProfessionalRepository.save(managedProfessional);
     }
 
     public void delete(MedicalProfessionalId id) {

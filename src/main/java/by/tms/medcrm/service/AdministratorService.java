@@ -23,6 +23,11 @@ public class AdministratorService {
         return administratorRepository.findAll();
     }
 
+    public Administrator findById(Long id) {
+        return administratorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Администратор не найден"));
+    }
+
     public Administrator findByLastName(String lastName) throws EntityNotFoundException {
         return administratorRepository.findByLastName(lastName)
                 .orElseThrow(() -> new EntityNotFoundException("Администратор " + lastName + "не найден"));
@@ -40,6 +45,10 @@ public class AdministratorService {
 
         administrator.setAccount(account);
 
+        return administratorRepository.save(administrator);
+    }
+
+    public Administrator update(Administrator administrator) throws EntityNotFoundException {
         return administratorRepository.save(administrator);
     }
 
