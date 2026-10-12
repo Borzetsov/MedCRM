@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AdministratorRepository extends JpaRepository<Administrator,Long> {
+public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
     Optional<Administrator> findByLastName(String lastName);
 }
