@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Администраторы</title>
+</head>
+<body>
+<form th:action="@{/administration/administrators}" method="post">
+    <input type="text" name="firstName" placeholder="Имя">
+    <input type="text" name="lastName" placeholder="Фамилия">
+    <button>Регистрация</button>
+</form>
+<br>
+<ol>
+    <li th:each="administrator : ${administrators}">
+        <span th:text="${administrator.getLastName()}">Фамилия</span>
+        <span th:text="${administrator.getFirstName()}">Имя</span>
+        <a th:href="@{/administration/administrators/edit(id=${administrator.getId()})}">Редактировать</a>
+        <form th:action="@{/administration/administrators/delete/{id}(id=${administrator.getId()})}" method="post">
+            <button type="submit" onclick="return confirm('Удалить администратора?')">Удалить</button>
+        </form>
+    </li>
+</ol>
+<a th:href="@{/administration}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

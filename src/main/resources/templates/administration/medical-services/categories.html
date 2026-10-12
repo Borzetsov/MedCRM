@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Категории медицинских услуг</title>
+</head>
+<body>
+<form th:action="@{/administration/medical-services/categories}" method="post">
+    <input type="text" name="name" placeholder="Название категории">
+    <button>Добавить</button>
+</form>
+<br>
+<ol>
+    <li th:each="medicalServiceCategory : ${medicalServiceCategories}">
+        <span th:text="${medicalServiceCategory.getName()}">Название</span>
+        <a th:href="@{/administration/medical-services/categories/edit(id=${medicalServiceCategory.getId()})}">Редактировать</a>
+        <form th:action="@{/administration/medical-services/categories/delete/{id}(id=${medicalServiceCategory.getId()})}" method="post">
+            <button type="submit" onclick="return confirm('Удалить категорию?')">Удалить</button>
+        </form>
+    </li>
+</ol>
+
+<a th:href="@{/administration}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

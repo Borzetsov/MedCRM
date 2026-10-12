@@ -24,7 +24,7 @@ public class MedicalProfessional implements Persistable<MedicalProfessionalId> {
     @JoinColumn(name = "category", nullable = false)
     private MedicalProfessionalCategory category;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 

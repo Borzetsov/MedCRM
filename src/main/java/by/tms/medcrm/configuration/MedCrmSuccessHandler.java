@@ -21,7 +21,7 @@ public class MedCrmSuccessHandler implements AuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if (roles.contains("ROLE_ADMINISTRATOR_CRM")) {
-            response.sendRedirect("/administration/medical_service_categories");
+            response.sendRedirect("/administration");
         }
         else if (roles.contains("ROLE_PATIENT")) {
             response.sendRedirect("/appointment/registration");

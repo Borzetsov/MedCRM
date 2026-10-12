@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Администрирование CRM</title>
+</head>
+<body>
+<a th:href="@{/administration/medical-services/categories}">Категории медицинских услуг</a><br>
+<a th:href="@{/administration/medical-services}">Медицинские услуги</a><br>
+<a th:href="@{/administration/medical-professionals/categories}">Категории медицинских работников</a><br>
+<a th:href="@{/administration/medical-professionals}">Медицинские работники</a><br>
+<a th:href="@{/administration/administrators}">Администраторы</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

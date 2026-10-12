@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование медицинского работника</title>
+</head>
+<body>
+<form th:action="@{/administration/medical-professionals/update}"
+      th:object="${medicalProfessional}" method="post">
+
+    <input type="hidden" name="professionalId" th:value="${currentProfessionalId}">
+    <input type="hidden" name="categoryId" th:value="${currentCategoryId}">
+
+    <label>Имя</label>
+    <input type="text" th:field="*{firstName}" placeholder="Имя"><br>
+    <label>Фамилия</label>
+    <input type="text" th:field="*{lastName}" placeholder="Фамилия"><br>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/administration/medical-professionals}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>
