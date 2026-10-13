@@ -25,8 +25,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/patients/main", "/patients/main/**").hasRole("PATIENT")
                         .requestMatchers("/patients/profile", "/patients/profile/**").hasRole("PATIENT")
                         .requestMatchers("/medical-services/categories", "/medical-services/categories/**").hasAnyRole("PATIENT", "ADMINISTRATOR", "ADMINISTRATOR_CRM")
+                        .requestMatchers("/appointments/book", "/appointments/book/**").hasAnyRole("PATIENT", "ADMINISTRATOR")
 
-                        .requestMatchers("/appointment/registration", "/appointment/registration/**").hasAnyRole("PATIENT", "ADMINISTRATOR")
                         .requestMatchers("/administration", "/administration/**").hasRole("ADMINISTRATOR_CRM")
                         .requestMatchers("/administration/medical-services/categories", "/administration/medical-services/categories/**").hasRole("ADMINISTRATOR_CRM")
                         .requestMatchers("/administration/medical-professionals/categories", "/administration/medical-professionals/categories/**").hasRole("ADMINISTRATOR_CRM")

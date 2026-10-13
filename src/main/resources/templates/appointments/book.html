@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись на прием</title>
+</head>
+<body>
+<form th:action="@{/appointments/book}" th:object="${currentPatient}" method="post">
+    <div th:if="${currentPatient != null}">
+        <input type="hidden" name="patientLastName" th:value="${currentPatient.lastName}">
+    </div>
+    <div th:if="${currentPatient == null}">
+        <input type="text" name="patientLastName" placeholder="Фамилия пациента"><br>
+    </div>
+    <input type="text" name="medicalService" placeholder="Услуга"><br>
+    <input type="text" name="medicalProfessionalLastName" placeholder="Фамилия врача"><br>
+    <input type="text" name="medicalProfessionalCategory" placeholder="Категория врача"><br>
+    <input type="date" name="appointmentDate" placeholder="Дата приема"><br>
+    <input type="number" name="timeslot" placeholder="Время"><br>
+    <button>Записаться</button>
+</form>
+
+<a sec:authorize="hasRole('PATIENT')" th:href="@{/patients/profile}">Назад</a><br>
+<br>
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/patients/registration")
-public class PatientRegistrationController {
+public class PatientsRegistrationController {
 
     private final PatientRegistrationService patientRegistrationService;
 
@@ -34,6 +34,6 @@ public class PatientRegistrationController {
         } catch (ServletException e) {
             return "redirect:/auth/login-error";
         }
-        return "redirect:/patients/" + patient.getId();
+        return "redirect:/patients/profile";
     }
 }
