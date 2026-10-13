@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Редактирование медицинской услуги</title>
 </head>
 <body>
-<form th:action="@{/administration/medical-services/update}"
+<form sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:action="@{/administration/medical-services/update}"
       th:object="${medicalService}" method="post">
 
     <input type="hidden" name="serviceId" th:value="${currentServiceId}">
@@ -23,7 +25,7 @@
     <button type="submit">Сохранить</button>
 </form>
 
-<a th:href="@{/administration/medical-services}">Назад</a><br>
+<a sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:href="@{/administration/medical-services}">Назад</a><br>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit" class="btn">Выйти</button>

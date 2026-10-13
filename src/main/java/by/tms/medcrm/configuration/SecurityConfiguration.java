@@ -21,7 +21,11 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/auth/login", "/auth/login-error").permitAll()
                         .requestMatchers("/patients/registration", "/patients/registration/**").permitAll()
+
                         .requestMatchers("/patients/main", "/patients/main/**").hasRole("PATIENT")
+                        .requestMatchers("/patients/profile", "/patients/profile/**").hasRole("PATIENT")
+                        .requestMatchers("/medical-services/categories", "/medical-services/categories/**").hasAnyRole("PATIENT", "ADMINISTRATOR", "ADMINISTRATOR_CRM")
+
                         .requestMatchers("/appointment/registration", "/appointment/registration/**").hasAnyRole("PATIENT", "ADMINISTRATOR")
                         .requestMatchers("/administration", "/administration/**").hasRole("ADMINISTRATOR_CRM")
                         .requestMatchers("/administration/medical-services/categories", "/administration/medical-services/categories/**").hasRole("ADMINISTRATOR_CRM")

@@ -18,20 +18,20 @@ public class AdminMedicalServiceCategoriesController {
     @GetMapping()
     public String showAllCategories(Model model) {
         model.addAttribute("medicalServiceCategories", medicalServiceCategoryService.findAll());
-        return "administration/medical-services/categories";
+        return "medical-services/categories";
     }
 
     @PostMapping
     public String createCategory(MedicalServiceCategoryDTO medicalServiceCategoryDTO, Model model) {
         medicalServiceCategoryService.create(medicalServiceCategoryDTO);
         model.addAttribute("medicalServiceCategories", medicalServiceCategoryService.findAll());
-        return "administration/medical-services/categories";
+        return "medical-services/categories";
     }
 
     @GetMapping("/edit")
-    public String showUpdateForm(@RequestParam(name = "id") Long id, Model model) {
+    public String showEditForm(@RequestParam(name = "id") Long id, Model model) {
         model.addAttribute("medicalServiceCategory", medicalServiceCategoryService.findById(id));
-        return "administration/medical-services/category-edit";
+        return "medical-services/category-edit";
     }
 
     @PostMapping("/update")
@@ -39,7 +39,7 @@ public class AdminMedicalServiceCategoriesController {
                                  Model model) {
         medicalServiceCategoryService.update(medicalServiceCategory);
         model.addAttribute("medicalServiceCategories", medicalServiceCategoryService.findAll());
-        return "administration/medical-services/categories";
+        return "medical-services/categories";
     }
 
 
@@ -47,6 +47,6 @@ public class AdminMedicalServiceCategoriesController {
     public String delete(@PathVariable("id") Long id, Model model) {
         medicalServiceCategoryService.delete(id);
         model.addAttribute("medicalServiceCategories", medicalServiceCategoryService.findAll());
-        return "administration/medical-services/categories";
+        return "medical-services/categories";
     }
 }

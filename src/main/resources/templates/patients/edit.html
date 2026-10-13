@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование профиля</title>
+</head>
+<body>
+<form th:action="@{/patients/profile/update}"
+      th:object="${currentPatient}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{account}">
+    <br>
+    <label>Имя</label>
+    <input type="text" th:field="*{firstName}" placeholder="Имя"><br>
+    <label>Фамилия</label>
+    <input type="text" th:field="*{lastName}" placeholder="Фамилия"><br>
+    <label>Дата рождения</label>
+    <input type="date"
+           id="birthDate"
+           name="birthDate"
+           th:value="${currentPatient.birthDate != null ? #temporals.format(currentPatient.birthDate, 'yyyy-MM-dd') : ''}"
+           placeholder="Дата рождения"><br>
+    <label>Пол</label>
+    <input type="text" th:field="*{gender}" placeholder="Пол"><br>
+    <label>Номер телефона</label>
+    <input type="text" th:field="*{phone}" placeholder="Номер телефона"><br>
+    <label>email</label>
+    <input type="email" th:field="*{email}" placeholder="email"><br>
+    <button>Сохранить</button>
+</form>
+<a sec:authorize="hasRole('PATIENT')" th:href="@{/patients/profile}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

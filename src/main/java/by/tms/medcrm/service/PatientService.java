@@ -24,4 +24,8 @@ public class PatientService {
         return patientRepository.findByAccountId(account.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Пациент не найден"));
     }
+
+    public Patient update(Patient patient) throws EntityNotFoundException {
+        return patientRepository.save(patient);
+    }
 }

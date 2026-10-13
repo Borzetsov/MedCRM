@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Редактирование категории медицинских услуг</title>
 </head>
 <body>
-<form th:action="@{/administration/medical-services/categories/update}"
+<form sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:action="@{/administration/medical-services/categories/update}"
       th:object="${medicalServiceCategory}" method="post">
     <input type="hidden" th:field="*{id}">
     <label>Название</label>
@@ -13,7 +15,7 @@
     <button type="submit">Сохранить</button>
 </form>
 
-<a th:href="@{/administration/medical-services/categories}">Назад</a><br>
+<a sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:href="@{/administration/medical-services/categories}">Назад</a><br>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit" class="btn">Выйти</button>

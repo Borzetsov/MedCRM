@@ -29,8 +29,7 @@ public class MedCrmSuccessHandler implements AuthenticationSuccessHandler {
         if (roles.contains("ROLE_ADMINISTRATOR_CRM")) {
             response.sendRedirect("/administration");
         } else if (roles.contains("ROLE_PATIENT")) {
-            Patient patient = patientService.findByLogin(authentication.getName());
-            response.sendRedirect("/patients/" + patient.getId());
+            response.sendRedirect("/patients/profile");
         } else {
             response.sendRedirect("/auth/login");
         }
