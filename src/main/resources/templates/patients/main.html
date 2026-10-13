@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет пациента</title>
+</head>
+<body>
+<a th:href="@{/medical-services/categories}">Категории медицинских услуг</a>
+<br>
+<a th:href="@{/medical-services}">Медицинские услуги</a>
+<br>
+<a th:href="@{/appointments/book}">Записаться на прием</a>
+<br>
+<a th:href="@{/patients/profile/appointments}">Приемы</a>
+<br>
+<br>
+<a th:href="@{/patients/profile/edit}">Редактировать профиль</a>
+
+<br>
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

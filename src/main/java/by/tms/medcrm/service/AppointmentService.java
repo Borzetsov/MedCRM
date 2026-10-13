@@ -1,53 +1,42 @@
-package by.tms.medcrm.controller;
+package by.tms.medcrm.service;
 
 import by.tms.medcrm.dto.AppointmentDTO;
 import by.tms.medcrm.entity.*;
 import by.tms.medcrm.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/appointment")
-public class AppointmentController {
+@Service
+@RequiredArgsConstructor
+public class AppointmentService {
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final PatientRepository patientRepository;
+    private final MedicalServiceRepository medicalServiceRepository;
+    private final MedicalProfessionalRepository medicalProfessionalRepository;
+    private final MedicalProfessionalCategoryRepository medicalProfessionalCategoryRepository;
 
-    @Autowired
-    private PatientRepository patientRepository;
+    private final PatientService patientService;
+    private final MedicalServiceService medicalServiceService;
+    private final MedicalProfessionalService medicalProfessionalService;
 
-    @Autowired
-    MedicalServiceRepository medicalServiceRepository;
-
-    @Autowired
-    private MedicalProfessionalRepository medicalProfessionalRepository;
-
-    @Autowired
-    private MedicalProfessionalCategoryRepository medicalProfessionalCategoryRepository;
-
-    @GetMapping("/registration")
-    public String appointmentRegistration(){
-        return "appointment_registration";
-    }
-
-    @PostMapping("/registration")
-    public String appointmentRegistration(@Valid AppointmentDTO appointmentDTO){
+    public Appointment book(@Valid AppointmentDTO appointmentDTO) {
         Appointment appointment = new Appointment();
 
         Optional<Patient> patient = patientRepository.findByLastName(appointmentDTO.getPatientLastName());
-        if (patient.isPresent()){
+        if (patient.isPresent()) {
             appointment.setPatient(patient.get());
         }
 
         Optional<MedicalService> medicalService = medicalServiceRepository
                 .findByName(appointmentDTO.getMedicalService());
-        if (medicalService.isPresent()){
+        if (medicalService.isPresent()) {
             appointment.setMedicalService(medicalService.get());
             appointment.setMedicalServiceId(appointment.getMedicalService().getId().getId());
             appointment.setPriceFact(medicalService.get().getPrice());
@@ -55,21 +44,28 @@ public class AppointmentController {
 
         Optional<MedicalProfessional> medicalProfessional = medicalProfessionalRepository
                 .findByLastName(appointmentDTO.getMedicalProfessionalLastName());
-        if (medicalProfessional.isPresent()){
+        if (medicalProfessional.isPresent()) {
             appointment.setMedicalProfessional(medicalProfessional.get());
             appointment.setMedicalProfessionalId(appointment.getMedicalProfessional().getId().getId());
         }
 
         Optional<MedicalProfessionalCategory> medicalProfessionalCategory = medicalProfessionalCategoryRepository
                 .findByName(appointmentDTO.getMedicalProfessionalCategory());
-        if  (medicalProfessionalCategory.isPresent()){
+        if (medicalProfessionalCategory.isPresent()) {
             appointment.setMedicalProfessionalCategoryId(medicalProfessionalCategory.get().getId());
         }
 
         appointment.setAppointmentDate(appointmentDTO.getAppointmentDate());
         appointment.setTimeslot(appointmentDTO.getTimeslot());
         appointment.setStatus(AppointmentStatusType.SCHEDULED);
-        appointmentRepository.save(appointment);
-        return "appointment_registration";
+        return appointmentRepository.save(appointment);
+    }
+
+    public void cancel(Long  appointmentId) {
+        appointmentRepository.deleteById(appointmentId);
+    }
+
+    public List<Appointment> findAllByPatient(Patient patient) {
+        return appointmentRepository.findAllByPatientId(patient.getId());
     }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список приемов</title>
+</head>
+<body>
+<ol>
+    <li th:each="appointment : ${appointments}">
+        <label>Дата приема</label>
+        <span th:text="${appointment.getAppointmentDate()}"></span>
+        <label>Услуга</label>
+        <span th:text="${appointment.getMedicalService().name}"></span>
+        <label>Врач</label>
+        <span th:text="${appointment.getMedicalProfessional().lastName}"></span>
+        <form sec:authorize="hasRole('PATIENT')" th:action="@{/appointments/cancel}" method="post">
+            <input type="hidden" name="appointmentId" th:value="${appointment.id}"/>
+            <button type="submit" onclick="return confirm('Отменить прием?')">Отменить</button>
+        </form>
+    </li>
+</ol>
+<a sec:authorize="hasRole('PATIENT')" th:href="@{/patients/profile}">Назад</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>

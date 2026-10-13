@@ -20,14 +20,14 @@ public class AdminMedicalServicesController {
     @GetMapping()
     public String showAllServices(Model model) {
         model.addAttribute("medicalServices", medicalServiceService.findAll());
-        return "administration/medical-services/list";
+        return "medical-services/list";
     }
 
     @PostMapping
     public String createService(MedicalServiceDTO medicalServiceDTO, Model model) {
         medicalServiceService.create(medicalServiceDTO);
         model.addAttribute("medicalServices", medicalServiceService.findAll());
-        return "administration/medical-services/list";
+        return "medical-services/list";
     }
 
     @GetMapping("/edit")
@@ -41,7 +41,7 @@ public class AdminMedicalServicesController {
         model.addAttribute("medicalService", medicalServiceService.findById(medicalServiceId));
         model.addAttribute("currentServiceId", serviceId);
         model.addAttribute("currentCategoryId", categoryId);
-        return "administration/medical-services/edit";
+        return "medical-services/edit";
     }
 
     @PostMapping("/update")
@@ -56,7 +56,7 @@ public class AdminMedicalServicesController {
 
         medicalServiceService.update(medicalService);
         model.addAttribute("medicalServices", medicalServiceService.findAll());
-        return "administration/medical-services/list";
+        return "medical-services/list";
     }
 
     @PostMapping("/delete")
@@ -68,6 +68,6 @@ public class AdminMedicalServicesController {
         medicalServiceId.setRequiredMedicalProfessionalCategory(categoryId);
         medicalServiceService.delete(medicalServiceId);
         model.addAttribute("medicalServices", medicalServiceService.findAll());
-        return "administration/medical-services/list";
+        return "medical-services/list";
     }
 }

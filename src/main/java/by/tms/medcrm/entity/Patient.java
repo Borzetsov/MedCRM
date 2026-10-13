@@ -16,7 +16,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
@@ -34,9 +34,9 @@ public class Patient {
     @Column(name = "gender", nullable = false, length = 1)
     private GenderType gender;
 
-    @Column(name =  "phone", nullable = false, unique = true, length = 16)
+    @Column(name = "phone", nullable = false, unique = true, length = 16)
     private String phone;
 
-    @Column(name =  "email", nullable = false, unique = true, length = 32)
+    @Column(name = "email", nullable = false, unique = true, length = 32)
     private String email;
 }
