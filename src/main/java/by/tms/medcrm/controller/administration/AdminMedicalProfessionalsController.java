@@ -2,7 +2,9 @@ package by.tms.medcrm.controller.administration;
 
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
 import by.tms.medcrm.entity.*;
+import by.tms.medcrm.service.MedicalProfessionalCategoryService;
 import by.tms.medcrm.service.MedicalProfessionalService;
+import by.tms.medcrm.service.MedicalServiceCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class AdminMedicalProfessionalsController {
 
     private final MedicalProfessionalService medicalProfessionalService;
+    private final MedicalProfessionalCategoryService medicalProfessionalCategoryService;
 
     @GetMapping()
     private String showAll(Model model) {
+        model.addAttribute("medicalProfessionalCategories", medicalProfessionalCategoryService.findAll());
         model.addAttribute("medicalProfessionals", medicalProfessionalService.findAll());
         return "administration/medical-professionals/list";
     }
@@ -36,6 +40,7 @@ public class AdminMedicalProfessionalsController {
         medicalProfessionalId.setId(professionalId);
         medicalProfessionalId.setCategory(categoryId);
 
+        model.addAttribute("medicalProfessionalCategories", medicalProfessionalCategoryService.findAll());
         model.addAttribute("medicalProfessional", medicalProfessionalService.findById(medicalProfessionalId));
         model.addAttribute("currentProfessionalId", professionalId);
         model.addAttribute("currentCategoryId", categoryId);

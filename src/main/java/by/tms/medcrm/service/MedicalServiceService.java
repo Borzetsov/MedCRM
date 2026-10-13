@@ -33,7 +33,7 @@ public class MedicalServiceService {
                 .orElseThrow(() -> new EntityNotFoundException("Услуга не найдена"));
     }
 
-    public MedicalService create(MedicalServiceDTO medicalServiceDTO) {
+    public MedicalService create(MedicalServiceDTO medicalServiceDTO) throws EntityNotFoundException {
         MedicalService medicalService = new MedicalService();
         medicalService.setName(medicalServiceDTO.getName());
         medicalService.setPrice(medicalServiceDTO.getPrice());
@@ -42,19 +42,14 @@ public class MedicalServiceService {
                 .findByName(medicalServiceDTO.getCategory());
         if (medicalServiceCategory.isPresent()) {
             medicalService.setCategory(medicalServiceCategory.get());
-        }
-
-        Optional<MedicalProfessionalCategory> medicalProfessionalCategory = medicalProfessionalCategoryRepository
-                .findByName(medicalServiceDTO.getRequiredMedicalProfessionalCategory());
-        if (medicalProfessionalCategory.isPresent()) {
-            medicalService.setRequiredMedicalProfessionalCategory(medicalProfessionalCategory.get());
+            medicalService.setRequiredMedicalProfessionalCategory(medicalServiceCategory.get().getDefaultProfessionalCategory());
         }
 
         return medicalServiceRepository.save(medicalService);
     }
 
     @Transactional
-    public MedicalService update(MedicalService medicalService) throws  EntityNotFoundException {
+    public MedicalService update(MedicalService medicalService) throws EntityNotFoundException {
         MedicalServiceId medicalServiceId = medicalService.getId();
         MedicalService managedMedicalService = medicalServiceRepository.findById(medicalServiceId)
                 .orElseThrow(() -> new EntityNotFoundException("Услуга не найдена"));

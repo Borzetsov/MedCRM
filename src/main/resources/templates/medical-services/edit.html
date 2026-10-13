@@ -16,8 +16,13 @@
     <label>Название</label>
     <input type="text" th:field="*{name}" placeholder="Название услуги"><br>
 
-    <label>Категория</label>
-    <input type="text" th:field="*{category.name}" placeholder="Категория услуги"><br>
+    <label for="category">Категория</label>
+    <select id="category" name="category" required>
+        <option value="">--Выбериет категорию--</option>
+        <option th:each="cat : ${medicalServiceCategories}"
+                th:value="${cat.name}"
+                th:text="${cat.name}">Название</option>
+    </select>
 
     <label>Цена</label>
     <input type="text" th:field="*{price}" placeholder="Цена"><br>

@@ -9,8 +9,15 @@
 <body>
 <form sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:action="@{/administration/medical-services}" method="post">
     <input type="text" name="name" placeholder="Название услуги"><br>
-    <input type="text" name="category" placeholder="Категория"><br>
-    <input type="text" name="requiredMedicalProfessionalCategory" placeholder="Категория медицинского работника"><br>
+    <br>
+    <label for="category">Категория</label>
+    <select id="category" name="category" required>
+        <option value="">--Выбериет категорию--</option>
+        <option th:each="cat : ${medicalServiceCategories}"
+                th:value="${cat.name}"
+                th:text="${cat.name}">Название</option>
+    </select>
+    <br>
     <input type="number" name="price" placeholder="Цена"><br>
     <button>Добавить</button>
 </form>

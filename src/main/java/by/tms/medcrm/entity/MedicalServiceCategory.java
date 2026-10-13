@@ -18,4 +18,8 @@ public class MedicalServiceCategory {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "default_professional_category_id")
+    private MedicalProfessionalCategory defaultProfessionalCategory;
 }

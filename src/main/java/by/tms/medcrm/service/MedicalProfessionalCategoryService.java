@@ -2,7 +2,6 @@ package by.tms.medcrm.service;
 
 import by.tms.medcrm.dto.MedicalProfessionalCategoryDTO;
 import by.tms.medcrm.entity.MedicalProfessionalCategory;
-import by.tms.medcrm.entity.MedicalServiceCategory;
 import by.tms.medcrm.repository.MedicalProfessionalCategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

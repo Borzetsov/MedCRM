@@ -4,16 +4,16 @@ import by.tms.medcrm.dto.MedicalServiceCategoryDTO;
 import by.tms.medcrm.entity.MedicalServiceCategory;
 import by.tms.medcrm.repository.MedicalServiceCategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MedicalServiceCategoryService {
 
-    @Autowired
-    private MedicalServiceCategoryRepository medicalServiceCategoryRepository;
+    private final MedicalServiceCategoryRepository medicalServiceCategoryRepository;
 
     public List<MedicalServiceCategory> findAll() {
         return medicalServiceCategoryRepository.findAll();
@@ -27,6 +27,7 @@ public class MedicalServiceCategoryService {
     public MedicalServiceCategory create(MedicalServiceCategoryDTO medicalServiceCategoryDTO) {
         MedicalServiceCategory medicalServiceCategory = new MedicalServiceCategory();
         medicalServiceCategory.setName(medicalServiceCategoryDTO.getName());
+        medicalServiceCategory.setDefaultProfessionalCategory(medicalServiceCategoryDTO.getDefaultProfessionalCategory());
         return medicalServiceCategoryRepository.save(medicalServiceCategory);
     }
 
