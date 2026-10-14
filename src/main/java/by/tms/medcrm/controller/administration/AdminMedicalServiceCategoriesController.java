@@ -2,6 +2,7 @@ package by.tms.medcrm.controller.administration;
 
 import by.tms.medcrm.dto.MedicalServiceCategoryDTO;
 import by.tms.medcrm.entity.MedicalServiceCategory;
+import by.tms.medcrm.service.MedicalProfessionalCategoryService;
 import by.tms.medcrm.service.MedicalServiceCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class AdminMedicalServiceCategoriesController {
 
     private final MedicalServiceCategoryService medicalServiceCategoryService;
+    private final MedicalProfessionalCategoryService medicalProfessionalCategoryService;
 
     @GetMapping()
     public String showAllCategories(Model model) {
+        model.addAttribute("medicalProfessionalCategories", medicalProfessionalCategoryService.findAll());
         model.addAttribute("medicalServiceCategories", medicalServiceCategoryService.findAll());
         return "medical-services/categories";
     }
@@ -24,12 +27,12 @@ public class AdminMedicalServiceCategoriesController {
     @PostMapping
     public String createCategory(MedicalServiceCategoryDTO medicalServiceCategoryDTO, Model model) {
         medicalServiceCategoryService.create(medicalServiceCategoryDTO);
-        model.addAttribute("medicalServiceCategories", medicalServiceCategoryService.findAll());
         return "medical-services/categories";
     }
 
     @GetMapping("/edit")
     public String showEditForm(@RequestParam(name = "id") Long id, Model model) {
+
         model.addAttribute("medicalServiceCategory", medicalServiceCategoryService.findById(id));
         return "medical-services/category-edit";
     }

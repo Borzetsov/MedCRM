@@ -9,5 +9,4 @@ public class MedicalServiceDTO {
     private String name;
     private BigDecimal price;
     private String category;
-    private String requiredMedicalProfessionalCategory;
 }

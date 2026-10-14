@@ -9,6 +9,16 @@
 <body>
 <form sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:action="@{/administration/medical-services/categories}" method="post">
     <input type="text" name="name" placeholder="Название категории">
+    <br>
+    <label for="defaultProfessionalCategory">Категория медицинского работника</label>
+    <br>
+    <select id="defaultProfessionalCategory" name="defaultProfessionalCategory" required>
+        <option value="">--Выбериет категорию--</option>
+        <option th:each="cat : ${medicalProfessionalCategories}"
+                th:value="${cat.id}"
+                th:text="${cat.name}">Название</option>
+    </select>
+    <br>
     <button>Добавить</button>
 </form>
 <br>

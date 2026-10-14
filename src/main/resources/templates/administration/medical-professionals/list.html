@@ -7,9 +7,19 @@
 <body>
 <form th:action="@{/administration/medical-professionals}" method="post">
     <input type="text" name="firstName" placeholder="Имя">
+    <br>
     <input type="text" name="lastName" placeholder="Фамилия">
-    <input type="text" name="category" placeholder="Категория">
-    <button>Регистрация</button>
+    <br>
+    <label for="category">Категория медицинского работника</label>
+    <br>
+    <select id="category" name="category" required>
+        <option value="">--Выбериет категорию--</option>
+        <option th:each="cat : ${medicalProfessionalCategories}"
+                th:value="${cat.name}"
+                th:text="${cat.name}">Название</option>
+    </select>
+    <br>
+    <button>Добавить</button>
 </form>
 <br>
 <ol>
