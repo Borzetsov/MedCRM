@@ -14,9 +14,20 @@
     <div th:if="${currentPatient == null}">
         <input type="text" name="patientLastName" placeholder="Фамилия пациента"><br>
     </div>
-    <input type="text" name="medicalService" placeholder="Услуга"><br>
-    <input type="text" name="medicalProfessionalLastName" placeholder="Фамилия врача"><br>
-    <input type="text" name="medicalProfessionalCategory" placeholder="Категория врача"><br>
+    <div th:if="${medicalService != null}">
+        <input type="hidden" name="medicalService" th:value="${medicalService.name}"><br>
+    </div>
+    <div th:if="${medicalService == null}">
+        <input type="text" name="medicalService" placeholder="Услуга"><br>
+    </div>
+
+    <select id="medicalProfessionalLastName" name="medicalProfessionalLastName" required>
+        <option value="">--Выбериет врача--</option>
+        <option th:each="md : ${medicalProfessionals}"
+                th:value="${md.lastName}"
+                th:text="${md.lastName}">Фамилия</option>
+    </select>
+    <input type="hidden" name="medicalProfessionalCategory" th:value="${medicalService.requiredMedicalProfessionalCategory.name}"><br>
     <input type="date" name="appointmentDate" placeholder="Дата приема"><br>
     <input type="number" name="timeslot" placeholder="Время"><br>
     <button>Записаться</button>

@@ -28,6 +28,10 @@ public class MedicalServiceService {
         return medicalServiceRepository.findAll();
     }
 
+    public List<MedicalService> findAllByCategory(MedicalServiceCategory medicalServiceCategory) {
+        return medicalServiceRepository.findAllByCategory(medicalServiceCategory);
+    }
+
     public MedicalService findById(MedicalServiceId medicalServiceId) throws EntityNotFoundException {
         return medicalServiceRepository.findById(medicalServiceId)
                 .orElseThrow(() -> new EntityNotFoundException("Услуга не найдена"));

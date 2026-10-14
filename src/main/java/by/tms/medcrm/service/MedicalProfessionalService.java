@@ -22,6 +22,10 @@ public class MedicalProfessionalService {
         return medicalProfessionalRepository.findAll();
     }
 
+    public List<MedicalProfessional> findAllByCategory(MedicalProfessionalCategory category) {
+        return medicalProfessionalRepository.findAllByCategory(category);
+    }
+
     public MedicalProfessional findById(MedicalProfessionalId medicalProfessionalId) throws EntityNotFoundException {
         return medicalProfessionalRepository.findById(medicalProfessionalId)
                 .orElseThrow(() -> new EntityNotFoundException("Медицинский работник не найден"));

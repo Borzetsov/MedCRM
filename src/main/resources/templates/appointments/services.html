@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинские услуги</title>
+</head>
+<body>
+<ol>
+    <li th:each="medicalService : ${medicalServices}">
+        <span th:text="${medicalService.getName()}">Название</span>
+        <span th:text="${medicalService.getPrice()}">Цена</span>
+        <a sec:authorize="hasRole('PATIENT')"
+           th:href="@{/appointments/book(serviceId=${medicalService.getId().getId()}, categoryId=${medicalService.getId().getRequiredMedicalProfessionalCategory()})}">Записаться</a>
+    </li>
+</ol>
+
+<a sec:authorize="hasRole('PATIENT')" th:href="@{/patients/profile}">В личный кабинет</a><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit" class="btn">Выйти</button>
+</form>
+</body>
+</html>
