@@ -13,6 +13,8 @@
         <span th:text="${appointment.getAppointmentDate()}"></span>
         <label>Услуга</label>
         <span th:text="${appointment.getMedicalService().name}"></span>
+        <label>Время</label>
+        <span th:text="${appointment.getTimeslot()}"></span>
         <label>Врач</label>
         <span th:text="${appointment.getMedicalProfessional().lastName}"></span>
         <form sec:authorize="hasRole('PATIENT')" th:action="@{/appointments/cancel}" method="post">

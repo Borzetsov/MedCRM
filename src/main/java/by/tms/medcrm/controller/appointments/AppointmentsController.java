@@ -1,16 +1,10 @@
 package by.tms.medcrm.controller.appointments;
 
 import by.tms.medcrm.dto.AppointmentDTO;
-import by.tms.medcrm.entity.MedicalProfessional;
-import by.tms.medcrm.entity.MedicalService;
-import by.tms.medcrm.entity.MedicalServiceCategory;
-import by.tms.medcrm.entity.MedicalServiceId;
+import by.tms.medcrm.entity.*;
 import by.tms.medcrm.repository.MedicalProfessionalRepository;
-import by.tms.medcrm.service.AppointmentService;
-import by.tms.medcrm.service.MedicalServiceCategoryService;
-import by.tms.medcrm.service.MedicalServiceService;
-import by.tms.medcrm.service.PatientService;
-import jakarta.validation.Valid;
+import by.tms.medcrm.service.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -18,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,6 +25,7 @@ public class AppointmentsController {
     private final MedicalServiceCategoryService medicalServiceCategoryService;
     private final MedicalServiceService medicalServiceService;
     private final MedicalProfessionalRepository medicalProfessionalRepository;
+    private final MedicalProfessionalService medicalProfessionalService;
 
     @GetMapping("/categories")
     public String showCategories(Model model) {
@@ -45,9 +40,32 @@ public class AppointmentsController {
         return "appointments/services";
     }
 
+    @PostMapping("/services")
+    public String showService(@RequestParam(name = "medicalServiceName") String medicalServiceName,
+                              Authentication authentication, Model model) {
+        MedicalService service = medicalServiceService.findByName(medicalServiceName);
+        List<Map<LocalDate, Set<Integer>>> timeslotsForWeek = new ArrayList<>();
+        LocalDate date = LocalDate.now();
+        for (int i = 0; i < 7; i++) {
+            timeslotsForWeek.add(new HashMap<>());
+            timeslotsForWeek.get(i).put(date, appointmentService.getAvailableTimeslotsOnDate(service, date));
+            date = date.plusDays(1);
+        }
+        model.addAttribute("timeslotsForWeek", timeslotsForWeek);
+        model.addAttribute("medicalService", service);
+
+        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        if (roles.contains("ROLE_PATIENT")) {
+            String login = authentication.getName();
+            model.addAttribute("currentPatient", patientService.findByLogin(login));
+        }
+        return "appointments/book";
+    }
+
     @GetMapping("/book")
     public String showBookForm(@RequestParam(name = "serviceId") Long serviceId,
-                               @RequestParam(name="categoryId") Long categoryId,
+                               @RequestParam(name = "categoryId") Long categoryId,
+                               @RequestParam(name = "timeslot") Integer timeslot,
                                Authentication authentication,
                                Model model) {
         MedicalServiceId medicalServiceId = new MedicalServiceId();
@@ -69,7 +87,33 @@ public class AppointmentsController {
     }
 
     @PostMapping("/book")
-    public String appointmentBook(@Valid AppointmentDTO appointmentDTO) {
+    public String appointmentBook(@RequestParam(name = "serviceId") Long serviceId,
+                                  @RequestParam(name = "categoryId") Long categoryId,
+                                  @RequestParam(name = "appointmentDate") LocalDate appointmentDate,
+                                  @RequestParam(name = "timeslot") Integer timeslot,
+                                  Authentication authentication,
+                                  Model model) {
+
+        MedicalServiceId medicalServiceId = new MedicalServiceId();
+        medicalServiceId.setId(serviceId);
+        medicalServiceId.setRequiredMedicalProfessionalCategory(categoryId);
+        MedicalService medicalService = medicalServiceService.findById(medicalServiceId);
+
+        Patient patient = patientService.findByLogin(authentication.getName());
+        MedicalProfessional medicalProfessional =
+                appointmentService.findProfessional(medicalService.getRequiredMedicalProfessionalCategory(),
+                        appointmentDate, timeslot)
+                        .orElseThrow(() -> new EntityNotFoundException("Нет доступных специалистов"));
+
+        AppointmentDTO appointmentDTO = new AppointmentDTO();
+        appointmentDTO.setPatientLastName(patient.getLastName());
+        appointmentDTO.setMedicalService(medicalService.getName());
+        appointmentDTO.setMedicalProfessionalLastName(medicalProfessional.getLastName());
+        appointmentDTO.setMedicalProfessionalCategory(medicalService
+                .getRequiredMedicalProfessionalCategory().getName());
+        appointmentDTO.setAppointmentDate(appointmentDate);
+        appointmentDTO.setTimeslot(timeslot);
+
         appointmentService.book(appointmentDTO);
         return "redirect:/patients/profile";
     }

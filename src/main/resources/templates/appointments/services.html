@@ -7,14 +7,17 @@
     <title>Медицинские услуги</title>
 </head>
 <body>
-<ol>
-    <li th:each="medicalService : ${medicalServices}">
-        <span th:text="${medicalService.getName()}">Название</span>
-        <span th:text="${medicalService.getPrice()}">Цена</span>
-        <a sec:authorize="hasRole('PATIENT')"
-           th:href="@{/appointments/book(serviceId=${medicalService.getId().getId()}, categoryId=${medicalService.getId().getRequiredMedicalProfessionalCategory()})}">Записаться</a>
-    </li>
-</ol>
+
+<form th:action="@{/appointments/services}" method="post">
+    <label for="medicalServiceName"></label>
+    <select id="medicalServiceName" name="medicalServiceName" required>
+        <option value="">--Выбериет услугу--</option>
+        <option th:each="service : ${medicalServices}"
+                th:value="${service.name}"
+                th:text="${service.name}">Услуга</option>
+    </select>
+    <button type="submit" class="btn">Посмотреть доступные даты</button>
+</form>
 
 <a sec:authorize="hasRole('PATIENT')" th:href="@{/patients/profile}">В личный кабинет</a><br>
 

@@ -1,10 +1,7 @@
 package by.tms.medcrm.service;
 
 import by.tms.medcrm.dto.MedicalServiceDTO;
-import by.tms.medcrm.entity.MedicalProfessionalCategory;
-import by.tms.medcrm.entity.MedicalService;
-import by.tms.medcrm.entity.MedicalServiceCategory;
-import by.tms.medcrm.entity.MedicalServiceId;
+import by.tms.medcrm.entity.*;
 import by.tms.medcrm.repository.MedicalProfessionalCategoryRepository;
 import by.tms.medcrm.repository.MedicalServiceCategoryRepository;
 import by.tms.medcrm.repository.MedicalServiceRepository;
@@ -13,8 +10,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,6 @@ public class MedicalServiceService {
 
     private final MedicalServiceRepository medicalServiceRepository;
     private final MedicalServiceCategoryRepository medicalServiceCategoryRepository;
-    private final MedicalProfessionalCategoryRepository medicalProfessionalCategoryRepository;
 
     public List<MedicalService> findAll() {
         return medicalServiceRepository.findAll();
@@ -37,6 +36,11 @@ public class MedicalServiceService {
                 .orElseThrow(() -> new EntityNotFoundException("Услуга не найдена"));
     }
 
+    public MedicalService findByName(String medicalServiceName) throws EntityNotFoundException {
+        return medicalServiceRepository.findByName(medicalServiceName)
+                .orElseThrow(() -> new EntityNotFoundException("Услуга не найдена"));
+    }
+
     public MedicalService create(MedicalServiceDTO medicalServiceDTO) throws EntityNotFoundException {
         MedicalService medicalService = new MedicalService();
         medicalService.setName(medicalServiceDTO.getName());
@@ -48,7 +52,6 @@ public class MedicalServiceService {
             medicalService.setCategory(medicalServiceCategory.get());
             medicalService.setRequiredMedicalProfessionalCategory(medicalServiceCategory.get().getDefaultProfessionalCategory());
         }
-
         return medicalServiceRepository.save(medicalService);
     }
 
