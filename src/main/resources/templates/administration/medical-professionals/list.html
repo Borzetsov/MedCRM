@@ -1,42 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Медицинские работники</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
 </head>
 <body>
-<form th:action="@{/administration/medical-professionals}" method="post">
-    <input type="text" name="firstName" placeholder="Имя">
-    <br>
-    <input type="text" name="lastName" placeholder="Фамилия">
-    <br>
-    <label for="category">Категория медицинского работника</label>
-    <br>
-    <select id="category" name="category" required>
-        <option value="">--Выбериет категорию--</option>
-        <option th:each="cat : ${medicalProfessionalCategories}"
-                th:value="${cat.name}"
-                th:text="${cat.name}">Название</option>
-    </select>
-    <br>
-    <button>Добавить</button>
-</form>
-<br>
-<ol>
-    <li th:each="medicalProfessional : ${medicalProfessionals}">
-        <span th:text="${medicalProfessional.getFirstName()}">Мия</span>
-        <span th:text="${medicalProfessional.getLastName()}">Фамилия</span>
-        <span th:text="${medicalProfessional.getCategory().getName()}">Категория</span>
-        <a th:href="@{/administration/medical-professionals/edit(professionalId=${medicalProfessional.getId().getId()}, categoryId=${medicalProfessional.getId().getCategory()})}">Редактировать</a>
-        <form th:action="@{/administration/medical-professionals/delete(id=${medicalProfessional.getId().getId()}, categoryId=${medicalProfessional.getId().getCategory()})}" method="post">
-            <button type="submit" onclick="return confirm('Удалить медицинского работника?')">Удалить</button>
-        </form>
-    </li>
-</ol>
-<a th:href="@{/administration}">Назад</a><br>
+<div th:replace="~{fragments/layout :: header-fragment}"></div>
 
-<form th:action="@{/logout}" method="post">
-    <button type="submit" class="btn">Выйти</button>
-</form>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-4">
+            <form th:action="@{/administration/medical-professionals}" method="post">
+                <label>Добавить медицинского работника</label><br>
+                <input class="form-control" type="text" name="firstName" placeholder="Имя" required>
+                <input class="form-control" type="text" name="lastName" placeholder="Фамилия" required>
+                <label for="category">Категория медицинского работника</label>
+                <select class="form-control" id="category" name="category" required>
+                    <option value="">--Выберите категорию--</option>
+                    <option th:each="cat : ${medicalProfessionalCategories}"
+                            th:value="${cat.name}"
+                            th:text="${cat.name}">Название
+                    </option>
+                </select>
+                <button class="btn" type="submit">Добавить</button>
+            </form>
+        </div>
+        <div class="col">
+            <label>Список медицинских работников</label>
+            <ol class="list-group">
+                <li th:each="medicalProfessional : ${medicalProfessionals}" class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <span th:text="${medicalProfessional.getFirstName()}">Имя</span>
+                        </div>
+                        <div class="col">
+                            <span th:text="${medicalProfessional.getLastName()}">Фамилия</span>
+                        </div>
+                        <div class="col">
+                            <span th:text="${medicalProfessional.getCategory().getName()}">Категория</span>
+                        </div>
+                        <div class="col">
+                            <a class="btn"
+                               th:href="@{/administration/medical-professionals/edit(professionalId=${medicalProfessional.getId().getId()}, categoryId=${medicalProfessional.getId().getCategory()})}">Редактировать</a>
+                        </div>
+                        <div class="col">
+                            <form th:action="@{/administration/medical-professionals/delete(id=${medicalProfessional.getId().getId()}, categoryId=${medicalProfessional.getId().getCategory()})}"
+                                  method="post">
+                                <button class="btn" type="submit" onclick="return confirm('Удалить медицинского работника?')">
+                                    Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<a class="btn" th:href="@{/administration}">Назад</a><br>
+
+<div th:replace="~{fragments/layout :: footer-fragment}"></div>
+<script type="module"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
+        crossorigin="anonymous"></script>
 </body>
 </html>

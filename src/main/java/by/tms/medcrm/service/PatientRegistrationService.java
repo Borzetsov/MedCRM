@@ -22,7 +22,7 @@ public class PatientRegistrationService {
         patient.setFirstName(patientDTO.getFirstName());
         patient.setLastName(patientDTO.getLastName());
         patient.setBirthDate(patientDTO.getBirthDate());
-        patient.setGender(patientDTO.getGender().equals("M") ? GenderType.MALE : GenderType.FEMALE);
+        patient.setGender(patientDTO.getGender().equals("MALE") ? GenderType.MALE : GenderType.FEMALE);
         patient.setPhone(patientDTO.getPhone());
         patient.setEmail(patientDTO.getEmail());
 

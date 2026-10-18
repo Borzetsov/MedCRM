@@ -1,28 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Категории медицинских работников</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
 </head>
 <body>
-<form th:action="@{/administration/medical-professionals/categories}" method="post">
-    <input type="text" name="name" placeholder="Название категории">
-    <button>Добавить</button>
-</form>
-<br>
-<ol>
-    <li th:each="medicalProfessionalCategory : ${medicalProfessionalCategories}">
-        <span th:text="${medicalProfessionalCategory.getName()}">Название</span>
-        <a th:href="@{/administration/medical-professionals/categories/edit(id=${medicalProfessionalCategory.getId()})}">Редактировать</a>
-        <form th:action="@{/administration/medical-professionals/categories/delete/{id}(id=${medicalProfessionalCategory.getId()})}" method="post">
-            <button type="submit" onclick="return confirm('Удалить категорию?')">Удалить</button>
-        </form>
-    </li>
-</ol>
-<a th:href="@{/administration}">Назад</a><br>
+<div th:replace="~{fragments/layout :: header-fragment}"></div>
 
-<form th:action="@{/logout}" method="post">
-    <button type="submit" class="btn">Выйти</button>
-</form>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-4">
+            <form th:action="@{/administration/medical-professionals/categories}" method="post">
+                <label>Добавить категорию</label><br>
+                <input class="form-control" type="text" name="name" placeholder="Название категории" required>
+                <button type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+        <div class="col">
+            <label>Список категорий медицинских работников</label>
+            <ol class="list-group">
+                <li th:each="medicalProfessionalCategory : ${medicalProfessionalCategories}" class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <span th:text="${medicalProfessionalCategory.getName()}">Название</span>
+                        </div>
+                        <div class="col">
+                            <a class="btn"
+                               th:href="@{/administration/medical-professionals/categories/edit(id=${medicalProfessionalCategory.getId()})}">Редактировать</a>
+                        </div>
+                        <div class="col">
+                            <form th:action="@{/administration/medical-professionals/categories/delete/{id}(id=${medicalProfessionalCategory.getId()})}"
+                                  method="post">
+                                <button type="submit" class="btn" onclick="return confirm('Удалить категорию?')">Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<a class="btn" sec:authorize="hasRole('ADMINISTRATOR_CRM')" th:href="@{/administration}">Назад</a><br>
+
+<div th:replace="~{fragments/layout :: footer-fragment}"></div>
+<script type="module"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
+        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -3,22 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация нового пациента</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
 </head>
 <body>
-<form th:action="@{/patients/registration}" method="post">
-    <input type="text" name="login" placeholder="Логин" required>
-    <input type="password" name="password" placeholder="Пароль" required>
-    <br>
-    <input type="text" name="firstName" placeholder="Имя" required>
-    <input type="text" name="lastName" placeholder="Фамилия" required>
-    <input type="date" name="birthDate" placeholder="Дата рождения" required>
-    <input type="text" name="gender" placeholder="Пол" required>
-    <input type="text" name="phone" placeholder="Номер телефона" required>
-    <input type="email" name="email" placeholder="email" required>
-    <button>Регистрация</button>
-</form>
-<form th:action="@{/auth/login}" method="get">
-    <button type="submit" class="btn">Назад</button>
-</form>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-4 col-md-6 col-lg-4">
+            <form th:action="@{/patients/registration}" method="post">
+                <div class="mb-3">
+                    <label for="loginInput" class="form-label">Логин</label>
+                    <input type="text" name="login" class="form-control" id="loginInput" required>
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Пароль</label>
+                    <input type="password" name="password" class="form-control" id="passwordInput" required>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="firstName" placeholder="Имя" required>
+                    <input class="form-control" type="text" name="lastName" placeholder="Фамилия" required>
+                    <label for="birthDate" class="form-label">Дата рождения</label>
+                    <input type="text" class="form-control w-12" id="birthDate" name="birthDate"
+                           data-bs-toggle="datepicker" autocomplete="off" placeholder="Укажите дату…">
+                    <label>Пол</label>
+                    <div class="form-field">
+                        <input class="radio" name="gender" type="radio" id="radioLabel" value="MALE"/>
+                        <label for="radioLabel">М</label>
+                    </div>
+                    <div class="form-field">
+                        <input class="radio" name="gender" type="radio" id="radioLabel2" value="FEMALE"/>
+                        <label for="radioLabel2">Ж</label>
+                    </div>
+                    <input class="form-control" type="text" name="phone" placeholder="Номер телефона" required>
+                    <input class="form-control" type="email" name="email" placeholder="email" required>
+                </div>
+                <button class="btn" type="submit">Регистрация</button>
+                <a class="btn" th:href="@{/auth/login}">Назад</a><br>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer-fragment}"></div>
+<script type="module"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
+        crossorigin="anonymous"></script>
 </body>
 </html>
