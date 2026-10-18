@@ -40,7 +40,7 @@
                             <form th:if="${appointment.status != 'FINISHED'}" sec:authorize="hasRole('PATIENT')"
                                   th:action="@{/appointments/cancel}" method="post">
                                 <input type="hidden" name="appointmentId" th:value="${appointment.id}"/>
-                                <button type="submit" onclick="return confirm('Отменить прием?')">Отменить</button>
+                                <button class="btn" type="submit" onclick="return confirm('Отменить прием?')">Отменить</button>
                             </form>
                             <label th:if="${appointment.status == 'FINISHED'}" th:value="${appointment.status}"></label>
                         </div>
