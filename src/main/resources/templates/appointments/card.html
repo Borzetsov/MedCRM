@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прием</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: header-fragment}"></div>
+
+<div class="row">
+    <div class="col">
+        <label>Дата</label><br>
+        <label th:text="${appointment.appointmentDate}"></label><br>
+        <label>Время</label><br>
+        <label th:text="${(30 * (15 + appointment.timeslot)) / 60}
+                            + ':' + ${#numbers.formatInteger((30 * (15 + appointment.timeslot)) % 60, 2)}"></label><br>
+        <label>Пациент</label><br>
+        <label th:text="${appointment.getPatient().getLastName()} + ' '
+                                + ${appointment.getPatient().getFirstName()}"></label><br>
+        <label>Медицинская услуга</label><br>
+        <label th:text="${appointment.getMedicalService().name}"></label><br>
+    </div>
+    <div class="col">
+        <label>Статус</label><br>
+        <label th:text="${appointment.status.name()}"></label>
+    </div>
+    <div class="col">
+        <form th:action="@{/medical-professionals/appointments/{id}(id=${appointment.id})}"
+              method="post">
+            <label for="appointmentStatus">Статус приема</label>
+            <select class="form-control" id="appointmentStatus" name="status" required>
+                <option value="">--Выберите статус--</option>
+                <option th:value="${appointment.status.SCHEDULED}" th:text="${appointment.status.SCHEDULED}"></option>
+                <option th:value="${appointment.status.STARTED}" th:text="${appointment.status.STARTED}"></option>
+                <option th:value="${appointment.status.CANCELLED}" th:text="${appointment.status.CANCELLED}"></option>
+                <option th:value="${appointment.status.FINISHED}" th:text="${appointment.status.FINISHED}"></option>
+            </select>
+            <button class="btn" type="submit">Изменить</button>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer-fragment}"></div>
+<script type="module"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package by.tms.medcrm.service;
 
+import by.tms.medcrm.dto.AccountDTO;
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
 import by.tms.medcrm.entity.*;
 import by.tms.medcrm.repository.AppointmentRepository;
@@ -19,6 +20,7 @@ import java.util.Set;
 public class MedicalProfessionalService {
 
     private final MedicalProfessionalRepository medicalProfessionalRepository;
+    private final AccountService accountService;
     private final MedicalProfessionalCategoryService medicalProfessionalCategoryService;
     private final PasswordUtil passwordUtil;
 
@@ -35,7 +37,17 @@ public class MedicalProfessionalService {
                 .orElseThrow(() -> new EntityNotFoundException("Медицинский работник не найден"));
     }
 
-    public MedicalProfessional create(MedicalProfessionalDTO medicalProfessionalDTO) throws EntityNotFoundException {
+    public MedicalProfessional findByLogin(String login) throws EntityNotFoundException {
+        Account account = accountService.findByLogin(login);
+        if (account == null) {
+            throw new EntityNotFoundException("Аккаунт не найден");
+        }
+        return medicalProfessionalRepository.findByAccountId(account.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Сотрудник не найден"));
+    }
+
+    public MedicalProfessional create(MedicalProfessionalDTO medicalProfessionalDTO,
+                                      AccountDTO accountDTO) throws EntityNotFoundException {
         MedicalProfessional medicalProfessional = new MedicalProfessional();
 
         MedicalProfessionalCategory category = medicalProfessionalCategoryService
@@ -48,8 +60,8 @@ public class MedicalProfessionalService {
 
         Account account = new Account();
         account.setRole(Role.ROLE_MEDICAL_PROFESSIONAL);
-        account.setLogin("MD_" + medicalProfessionalDTO.getLastName());
-        account.setPasswordHash(passwordUtil.hash("123"));
+        account.setLogin(accountDTO.getLogin());
+        account.setPasswordHash(passwordUtil.hash(accountDTO.getPassword()));
 
         medicalProfessional.setAccount(account);
 

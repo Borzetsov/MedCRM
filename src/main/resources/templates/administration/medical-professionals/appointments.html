@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Предстоящие приемы</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: header-fragment}"></div>
+
+<label>Список предстоящих приемов</label><br>
+
+<ol class="list-group">
+    <li th:each="appointment : ${appointments}" class="list-group-item">
+        <div class="row">
+            <div class="col">
+                <label>Дата</label><br>
+                <label th:text="${appointment.appointmentDate}"></label>
+            </div>
+            <div class="col">
+                <label>Время</label><br>
+                <label th:text="${(30 * (15 + appointment.timeslot)) / 60}
+                            + ':' + ${#numbers.formatInteger((30 * (15 + appointment.timeslot)) % 60, 2)}"></label>
+            </div>
+            <div class="col">
+                <label>Пациент</label><br>
+                <label th:text="${appointment.getPatient().getLastName()} + ' '
+                                + ${appointment.getPatient().getFirstName()}"></label>
+            </div>
+            <div class="col">
+                <label>Медицинская услуга</label><br>
+                <label th:text="${appointment.getMedicalService().name}"></label>
+            </div>
+            <div class="col">
+                <label>Статус</label><br>
+                <label th:text="${appointment.status.name()}"></label>
+            </div>
+            <div class="col" th:if="${appointment.status != appointment.status.FINISHED
+                                    and appointment.status != appointment.status.CANCELLED}">
+                <a class="btn" th:href="@{/medical-professionals/appointments/{id}(id=${appointment.id})}">
+                    Открыть</a>
+            </div>
+        </div>
+    </li>
+</ol>
+
+
+<a class="btn" th:href="@{/medical-professionals}">В личный кабнет</a>
+
+<div th:replace="~{fragments/layout :: footer-fragment}"></div>
+<script type="module"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
+        crossorigin="anonymous"></script>
+</body>
+</body>
+</html>
