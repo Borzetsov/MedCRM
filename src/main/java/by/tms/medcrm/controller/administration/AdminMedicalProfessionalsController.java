@@ -1,5 +1,6 @@
 package by.tms.medcrm.controller.administration;
 
+import by.tms.medcrm.dto.AccountDTO;
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
 import by.tms.medcrm.entity.*;
 import by.tms.medcrm.service.MedicalProfessionalCategoryService;
@@ -26,8 +27,9 @@ public class AdminMedicalProfessionalsController {
     }
 
     @PostMapping()
-    private String create(MedicalProfessionalDTO medicalProfessionalDTO, Model model) {
-        medicalProfessionalService.create(medicalProfessionalDTO);
+    private String create(MedicalProfessionalDTO medicalProfessionalDTO,
+                          AccountDTO accountDTO, Model model) {
+        medicalProfessionalService.create(medicalProfessionalDTO, accountDTO);
         model.addAttribute("medicalProfessionals", medicalProfessionalService.findAll());
         return "administration/medical-professionals/list";
     }

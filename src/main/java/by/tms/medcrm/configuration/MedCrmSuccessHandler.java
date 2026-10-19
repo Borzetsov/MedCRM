@@ -26,6 +26,8 @@ public class MedCrmSuccessHandler implements AuthenticationSuccessHandler {
             response.sendRedirect("/administration");
         } else if (roles.contains("ROLE_PATIENT")) {
             response.sendRedirect("/patients/profile");
+        } else if (roles.contains("ROLE_MEDICAL_PROFESSIONAL")) {
+            response.sendRedirect("/medical-professionals");
         } else {
             response.sendRedirect("/auth/login");
         }

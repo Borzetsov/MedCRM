@@ -64,8 +64,22 @@ public class AppointmentService {
         appointmentRepository.deleteById(appointmentId);
     }
 
+    public void update(Appointment  appointment) {
+        appointmentRepository.save(appointment);
+    }
+
+    public Appointment findById(Long appointmentId) throws  EntityNotFoundException {
+        return  appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Прием не найден"));
+
+    }
+
     public List<Appointment> findAllByPatient(Patient patient) {
         return appointmentRepository.findAllByPatientId(patient.getId());
+    }
+
+    public List<Appointment> findAllByMedicalProfessional(MedicalProfessional medicalProfessional) {
+        return appointmentRepository.findAllByMedicalProfessionalId(medicalProfessional.getId().getId());
     }
 
     public List<Appointment> findAllByMedicalProfessionalIdAndAppointmentDate(MedicalProfessional medicalProfessional, LocalDate date) {
