@@ -46,4 +46,8 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findByLogin(login)
                 .orElseThrow(() -> new EntityNotFoundException("Аккаунт не найден"));
     }
+
+    public Boolean existsByLogin(String login) {
+        return accountRepository.existsByLogin(login);
+    }
 }

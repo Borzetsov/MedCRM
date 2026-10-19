@@ -102,7 +102,7 @@ public class AppointmentsController {
         Patient patient = patientService.findByLogin(authentication.getName());
         MedicalProfessional medicalProfessional =
                 appointmentService.findProfessional(medicalService.getRequiredMedicalProfessionalCategory(),
-                        appointmentDate, timeslot)
+                                appointmentDate, timeslot)
                         .orElseThrow(() -> new EntityNotFoundException("Нет доступных специалистов"));
 
         AppointmentDTO appointmentDTO = new AppointmentDTO();

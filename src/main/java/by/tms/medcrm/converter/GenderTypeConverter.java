@@ -21,8 +21,7 @@ public class GenderTypeConverter implements AttributeConverter<GenderType, Strin
     public GenderType convertToEntityAttribute(String dbData) {
         if (dbData == null) {
             return null;
-        }
-        else if (dbData.equals("M")) return GenderType.MALE;
+        } else if (dbData.equals("M")) return GenderType.MALE;
         else if (dbData.equals("F")) return GenderType.FEMALE;
         else return null;
     }

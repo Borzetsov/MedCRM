@@ -14,8 +14,10 @@
         <div class="col-3">
             <label>Добавить администратора</label><br>
             <form th:action="@{/administration/administrators}" method="post">
-                <input type="text" name="firstName" placeholder="Имя" aria-label="First name" class="form-control" required>
-                <input type="text" name="lastName" placeholder="Фамилия" aria-label="Last name" class="form-control" required>
+                <input type="text" name="firstName" placeholder="Имя" aria-label="First name" class="form-control"
+                       required>
+                <input type="text" name="lastName" placeholder="Фамилия" aria-label="Last name" class="form-control"
+                       required>
                 <button type="submit" class="btn">Добавить</button>
             </form>
         </div>

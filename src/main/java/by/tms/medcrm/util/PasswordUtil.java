@@ -13,7 +13,7 @@ public class PasswordUtil {
     public boolean verify(String password, String hash) {
         try {
             return BCrypt.checkpw(password, hash);
-        } catch(IllegalArgumentException | NullPointerException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             return false;
         }
     }

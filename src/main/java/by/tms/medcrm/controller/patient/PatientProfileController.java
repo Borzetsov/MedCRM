@@ -1,6 +1,5 @@
 package by.tms.medcrm.controller.patient;
 
-import by.tms.medcrm.entity.Appointment;
 import by.tms.medcrm.entity.Patient;
 import by.tms.medcrm.service.AppointmentService;
 import by.tms.medcrm.service.PatientService;
@@ -36,7 +35,7 @@ public class PatientProfileController {
     }
 
     @PostMapping("/update")
-    public String updatePatient(@ModelAttribute(name="currentPatient") Patient currentPatient) {
+    public String updatePatient(@ModelAttribute(name = "currentPatient") Patient currentPatient) {
         patientService.update(currentPatient);
         return "redirect:/patients/profile";
     }

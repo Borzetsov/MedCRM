@@ -47,7 +47,9 @@
                             <form sec:authorize="hasRole('ADMINISTRATOR_CRM')"
                                   th:action="@{/administration/medical-services/categories/delete/{id}(id=${medicalServiceCategory.getId()})}"
                                   method="post">
-                                <button class="btn" type="submit" onclick="return confirm('Удалить категорию?')">Удалить</button>
+                                <button class="btn" type="submit" onclick="return confirm('Удалить категорию?')">
+                                    Удалить
+                                </button>
                             </form>
                         </div>
                     </div>

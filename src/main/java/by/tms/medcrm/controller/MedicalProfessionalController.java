@@ -49,7 +49,7 @@ public class MedicalProfessionalController {
     public String setAppointmentStatus(@PathVariable Long id,
                                        @RequestParam(name = "status") AppointmentStatusType status,
                                        Authentication authentication, Model model) {
-        Appointment  appointment = appointmentService.findById(id);
+        Appointment appointment = appointmentService.findById(id);
         appointment.setStatus(status);
         appointmentService.update(appointment);
         return "redirect:/medical-professionals/appointments";
