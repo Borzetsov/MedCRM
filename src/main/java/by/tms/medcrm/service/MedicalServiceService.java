@@ -1,8 +1,9 @@
 package by.tms.medcrm.service;
 
 import by.tms.medcrm.dto.MedicalServiceDTO;
-import by.tms.medcrm.entity.*;
-import by.tms.medcrm.repository.MedicalProfessionalCategoryRepository;
+import by.tms.medcrm.entity.MedicalService;
+import by.tms.medcrm.entity.MedicalServiceCategory;
+import by.tms.medcrm.entity.MedicalServiceId;
 import by.tms.medcrm.repository.MedicalServiceCategoryRepository;
 import by.tms.medcrm.repository.MedicalServiceRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,11 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

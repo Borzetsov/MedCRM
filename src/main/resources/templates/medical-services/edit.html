@@ -25,7 +25,8 @@
                     <option value="">--Выберите категорию--</option>
                     <option th:each="cat : ${medicalServiceCategories}"
                             th:value="${cat.name}"
-                            th:text="${cat.name}">Название</option>
+                            th:text="${cat.name}">Название
+                    </option>
                 </select>
                 <label>Цена</label>
                 <input class="form-control" type="text" th:field="*{price}" placeholder="Цена" required>

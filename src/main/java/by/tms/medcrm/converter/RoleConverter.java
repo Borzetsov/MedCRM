@@ -4,8 +4,8 @@ import by.tms.medcrm.entity.Role;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-@Converter(autoApply=true)
-public class RoleConverter implements AttributeConverter<Role,String> {
+@Converter(autoApply = true)
+public class RoleConverter implements AttributeConverter<Role, String> {
 
     @Override
     public String convertToDatabaseColumn(Role attribute) {
@@ -20,7 +20,6 @@ public class RoleConverter implements AttributeConverter<Role,String> {
     public Role convertToEntityAttribute(String dbData) {
         if (dbData == null) {
             return null;
-        }
-        else return Role.valueOf("ROLE_" + dbData.toUpperCase());
+        } else return Role.valueOf("ROLE_" + dbData.toUpperCase());
     }
 }

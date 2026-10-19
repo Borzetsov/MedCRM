@@ -2,10 +2,11 @@ package by.tms.medcrm.controller.administration;
 
 import by.tms.medcrm.dto.AccountDTO;
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
-import by.tms.medcrm.entity.*;
+import by.tms.medcrm.entity.MedicalProfessional;
+import by.tms.medcrm.entity.MedicalProfessionalCategory;
+import by.tms.medcrm.entity.MedicalProfessionalId;
 import by.tms.medcrm.service.MedicalProfessionalCategoryService;
 import by.tms.medcrm.service.MedicalProfessionalService;
-import by.tms.medcrm.service.MedicalServiceCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +59,7 @@ public class AdminMedicalProfessionalsController {
         MedicalProfessionalCategory category = new MedicalProfessionalCategory();
         category.setId(categoryId);
         medicalProfessional.setCategory(category);
-        medicalProfessionalService.update( medicalProfessional);
+        medicalProfessionalService.update(medicalProfessional);
 
         model.addAttribute("medicalProfessionals", medicalProfessionalService.findAll());
         return "administration/medical-professionals/list";

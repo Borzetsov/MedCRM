@@ -11,18 +11,16 @@ public class AppointmentStatusTypeConverter implements AttributeConverter<Appoin
     public String convertToDatabaseColumn(AppointmentStatusType attribute) {
         if (attribute == null) {
             return null;
-        }
-        else  {
+        } else {
             return attribute.name().toLowerCase();
         }
     }
 
     @Override
     public AppointmentStatusType convertToEntityAttribute(String dbData) {
-        if (dbData == null){
+        if (dbData == null) {
             return null;
-        }
-        else {
+        } else {
             return AppointmentStatusType.valueOf(dbData.toUpperCase());
         }
     }

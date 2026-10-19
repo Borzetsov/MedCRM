@@ -40,17 +40,19 @@
                             <label>Статус:</label><br>
                             <span th:text="${appointment.status.name()}"></span>
                             <div class="col">
-                            <form th:if="${appointment.status != appointment.status.FINISHED
+                                <form th:if="${appointment.status != appointment.status.FINISHED
                                         and appointment.status != appointment.status.CANCELLED}"
-                                  sec:authorize="hasRole('PATIENT')"
-                                  th:action="@{/appointments/cancel}" method="post">
-                                <input type="hidden" name="appointmentId" th:value="${appointment.id}"/>
-                                <button class="btn" type="submit" onclick="return confirm('Отменить прием?')">Отменить
-                                </button>
-                            </form>
-                            <label th:if="${appointment.status == 'FINISHED'}" th:value="${appointment.status}"></label>
+                                      sec:authorize="hasRole('PATIENT')"
+                                      th:action="@{/appointments/cancel}" method="post">
+                                    <input type="hidden" name="appointmentId" th:value="${appointment.id}"/>
+                                    <button class="btn" type="submit" onclick="return confirm('Отменить прием?')">
+                                        Отменить
+                                    </button>
+                                </form>
+                                <label th:if="${appointment.status == 'FINISHED'}"
+                                       th:value="${appointment.status}"></label>
+                            </div>
                         </div>
-                    </div>
                 </li>
             </ol>
         </div>

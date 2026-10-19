@@ -3,17 +3,13 @@ package by.tms.medcrm.service;
 import by.tms.medcrm.dto.AccountDTO;
 import by.tms.medcrm.dto.MedicalProfessionalDTO;
 import by.tms.medcrm.entity.*;
-import by.tms.medcrm.repository.AppointmentRepository;
 import by.tms.medcrm.repository.MedicalProfessionalRepository;
 import by.tms.medcrm.util.PasswordUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

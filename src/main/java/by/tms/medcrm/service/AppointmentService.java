@@ -64,12 +64,12 @@ public class AppointmentService {
         appointmentRepository.deleteById(appointmentId);
     }
 
-    public void update(Appointment  appointment) {
+    public void update(Appointment appointment) {
         appointmentRepository.save(appointment);
     }
 
-    public Appointment findById(Long appointmentId) throws  EntityNotFoundException {
-        return  appointmentRepository.findById(appointmentId)
+    public Appointment findById(Long appointmentId) throws EntityNotFoundException {
+        return appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new EntityNotFoundException("Прием не найден"));
 
     }
@@ -109,8 +109,8 @@ public class AppointmentService {
     }
 
     public Optional<MedicalProfessional> findProfessional(MedicalProfessionalCategory category,
-                                                LocalDate appointmentDate,
-                                                Integer timeslot) {
+                                                          LocalDate appointmentDate,
+                                                          Integer timeslot) {
         List<MedicalProfessional> professionals = medicalProfessionalService.findAllByCategory(category);
         for (MedicalProfessional medicalProfessional : professionals) {
             if (!appointmentRepository

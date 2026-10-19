@@ -1,7 +1,6 @@
 package by.tms.medcrm.service;
 
-import by.tms.medcrm.dto.AccountDTO;
-import by.tms.medcrm.dto.PatientDTO;
+import by.tms.medcrm.dto.RegistrationDTO;
 import by.tms.medcrm.entity.Account;
 import by.tms.medcrm.entity.GenderType;
 import by.tms.medcrm.entity.Patient;
@@ -17,18 +16,26 @@ public class PatientRegistrationService {
     private final AccountService accountService;
     private final PatientRepository patientRepository;
 
-    public Patient createPatient(PatientDTO patientDTO, AccountDTO accountDTO) {
+    public Patient createPatient(RegistrationDTO registrationDTO) {
         Patient patient = new Patient();
-        patient.setFirstName(patientDTO.getFirstName());
-        patient.setLastName(patientDTO.getLastName());
-        patient.setBirthDate(patientDTO.getBirthDate());
-        patient.setGender(patientDTO.getGender().equals("MALE") ? GenderType.MALE : GenderType.FEMALE);
-        patient.setPhone(patientDTO.getPhone());
-        patient.setEmail(patientDTO.getEmail());
+        patient.setFirstName(registrationDTO.getNewPatientDTO().getFirstName());
+        patient.setLastName(registrationDTO.getNewPatientDTO().getLastName());
+        patient.setBirthDate(registrationDTO.getNewPatientDTO().getBirthDate());
+        patient.setGender(registrationDTO.getNewPatientDTO().getGender().equals("MALE") ? GenderType.MALE : GenderType.FEMALE);
+        patient.setPhone(registrationDTO.getNewPatientDTO().getPhone());
+        patient.setEmail(registrationDTO.getNewPatientDTO().getEmail());
 
-        Account account = accountService.create(accountDTO, Role.ROLE_PATIENT);
+        Account account = accountService.create(registrationDTO.getNewAccountDTO(), Role.ROLE_PATIENT);
         patient.setAccount(account);
 
         return patientRepository.save(patient);
+    }
+
+    public Boolean existsByPhone(String phone) {
+        return patientRepository.existsByPhone(phone);
+    }
+
+    public Boolean existsByEmail(String email) {
+        return patientRepository.existsByEmail(email);
     }
 }

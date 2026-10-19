@@ -10,32 +10,66 @@
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-4 col-md-6 col-lg-4">
-            <form th:action="@{/patients/registration}" method="post">
+            <form th:action="@{/patients/registration}" th:object="${registrationDTO}" method="post">
                 <div class="mb-3">
                     <label for="loginInput" class="form-label">Логин</label>
-                    <input type="text" name="login" class="form-control" id="loginInput" required>
+                    <input type="text" th:field="*{newAccountDTO.login}" class="form-control" id="loginInput" required>
+
+                    <p th:if="${#fields.hasErrors('newAccountDTO.login')}"
+                       th:errors="*{newAccountDTO.login}"></p>
                 </div>
                 <div class="mb-3">
                     <label for="passwordInput" class="form-label">Пароль</label>
-                    <input type="password" name="password" class="form-control" id="passwordInput" required>
+                    <input type="password" th:field="*{newAccountDTO.password}" class="form-control" id="passwordInput"
+                           required>
+
+                    <p th:if="${#fields.hasErrors('newAccountDTO.password')}"
+                       th:errors="*{newAccountDTO.password}"></p>
                 </div>
                 <div class="mb-3">
-                    <input class="form-control" type="text" name="firstName" placeholder="Имя" required>
-                    <input class="form-control" type="text" name="lastName" placeholder="Фамилия" required>
+                    <input class="form-control" type="text" th:field="*{newPatientDTO.firstName}" placeholder="Имя"
+                           required>
+
+                    <p th:if="${#fields.hasErrors('newPatientDTO.firstName')}"
+                       th:errors="*{newPatientDTO.firstName}"></p>
+
+                    <input class="form-control" type="text" th:field="*{newPatientDTO.lastName}" placeholder="Фамилия"
+                           required>
+
+                    <p th:if="${#fields.hasErrors('newPatientDTO.lastName')}"
+                       th:errors="*{newPatientDTO.lastName}"></p>
+
                     <label for="birthDate" class="form-label">Дата рождения</label>
-                    <input type="text" class="form-control w-12" id="birthDate" name="birthDate"
+                    <input type="text" class="form-control w-12" id="birthDate" th:field="*{newPatientDTO.birthDate}"
                            data-bs-toggle="datepicker" autocomplete="off" placeholder="Укажите дату…">
+
+                    <p th:if="${#fields.hasErrors('newPatientDTO.birthDate')}"
+                       th:errors="*{newPatientDTO.birthDate}"></p><br>
+
                     <label>Пол</label>
                     <div class="form-field">
-                        <input class="radio" name="gender" type="radio" id="radioLabel" value="MALE"/>
+                        <input class="radio" th:field="*{newPatientDTO.gender}" type="radio" id="radioLabel"
+                               value="MALE"/>
                         <label for="radioLabel">М</label>
-                    </div>
-                    <div class="form-field">
-                        <input class="radio" name="gender" type="radio" id="radioLabel2" value="FEMALE"/>
+
+                        <input class="radio" th:field="*{newPatientDTO.gender}" type="radio" id="radioLabel2"
+                               value="FEMALE"/>
                         <label for="radioLabel2">Ж</label>
+
+                        <p th:if="${#fields.hasErrors('newPatientDTO.gender')}"
+                           th:errors="*{newPatientDTO.gender}"></p>
                     </div>
-                    <input class="form-control" type="text" name="phone" placeholder="Номер телефона" required>
-                    <input class="form-control" type="email" name="email" placeholder="email" required>
+                    <input class="form-control" type="text" th:field="*{newPatientDTO.phone}"
+                           placeholder="Номер телефона" required>
+
+                    <p th:if="${#fields.hasErrors('newPatientDTO.phone')}"
+                       th:errors="*{newPatientDTO.phone}"></p>
+
+                    <input class="form-control" type="email" th:field="*{newPatientDTO.email}" placeholder="email"
+                           required>
+
+                    <p th:if="${#fields.hasErrors('newPatientDTO.email')}"
+                       th:errors="*{newPatientDTO.email}"></p>
                 </div>
                 <button class="btn" type="submit">Регистрация</button>
                 <a class="btn" th:href="@{/auth/login}">Назад</a><br>
